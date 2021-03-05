@@ -12,9 +12,16 @@ namespace hotel_reservation_test.Classes
 {
     public static class RoomsHelper
     {
-        public static List<string> StaticValidations(Rooms room)
+        public static List<string> StaticValidations(Rooms room, Boolean isInsert = true)
         {
             List<string> errors = new List<string>();
+            if (!isInsert)
+            {
+                if(room.id < 1)
+                {
+                    errors.Add(Constants.roomIdValueError);
+                }
+            }
 
             if (String.IsNullOrEmpty(room.roomNumber))
             {
@@ -54,6 +61,11 @@ namespace hotel_reservation_test.Classes
                     int hotelRoomCount = await mySQLDBContext.Rooms.Where(x => x.idHotel == room.idHotel
                                                                             && x.roomNumber == room.roomNumber)
                                                                         .CountAsync();
+
+                    //ToDo check PhoneExtension not on database
+                    int hotelPhoneExtensionCount = await mySQLDBContext.Rooms.Where(x => x.idHotel == room.idHotel
+                                                                            && x.phoneExtension == room.phoneExtension)
+                                                                        .CountAsync();
                     if (hotelCount != 1)
                     {
                         errors.Add(Constants.idHotelDoesntExistError);
@@ -63,31 +75,36 @@ namespace hotel_reservation_test.Classes
                     {
                         errors.Add(Constants.roomAlreadyExistError);
                     }
-                }
-                else
-                {
-                    int hotelRoomCount = await mySQLDBContext.Rooms.Where(x => x.idHotel == room.idHotel
-                                                                            && x.roomNumber == room.roomNumber
-                                                                            && x.id != room.id)
-                                                                        .CountAsync();
 
-                    if (hotelRoomCount != 0)
+                    if (hotelPhoneExtensionCount != 0)
                     {
-                        errors.Add(Constants.roomAlreadyExistError);
+                        errors.Add(Constants.roomExtensionExistError);
                     }
+
+                    return errors;
                 }
 
+                int hotelRoomCount2 = await mySQLDBContext.Rooms.Where(x => x.idHotel == room.idHotel
+                                                                        && x.roomNumber == room.roomNumber
+                                                                        && x.id != room.id)
+                                                                    .CountAsync();
 
                 //ToDo check PhoneExtension not on database
-                int hotelPhoneExtensionCount = await mySQLDBContext.Rooms.Where(x => x.idHotel == room.idHotel
-                                                                        && x.phoneExtension == room.phoneExtension)
+                int hotelPhoneExtensionCount2 = await mySQLDBContext.Rooms.Where(x => x.idHotel == room.idHotel
+                                                                        && x.phoneExtension == room.phoneExtension
+                                                                        && x.id != room.id)
                                                                     .CountAsync();
-                
 
-                if (hotelPhoneExtensionCount != 0)
+                if (hotelRoomCount2 != 0)
+                {
+                    errors.Add(Constants.roomAlreadyExistError);
+                }
+
+                if (hotelPhoneExtensionCount2 != 0)
                 {
                     errors.Add(Constants.roomExtensionExistError);
                 }
+
             }
             catch(Exception e)
             {
@@ -102,7 +119,7 @@ namespace hotel_reservation_test.Classes
             List<string> errors = new List<string>();
             try
             {
-                errors.AddRange(StaticValidations(room));
+                errors.AddRange(StaticValidations(room, isInsert));
                 errors.AddRange(await DatabaseValidations(room, mySQLDBContext, isInsert));
             }
             catch(Exception e)
@@ -111,6 +128,23 @@ namespace hotel_reservation_test.Classes
             }
             
             return errors;
+        }
+
+        public static async Task<string> validateRoomExists(int idRoom, MySQLDBContext mySQLDBContext)
+        {
+            try
+            {
+                int roomCount = await mySQLDBContext.Rooms.Where(x => x.id == idRoom).CountAsync();
+                if(roomCount != 1)
+                {
+                    return Constants.roomIdValueError;
+                }
+                return null;
+            }
+            catch(Exception e)
+            {
+                throw e;
+            }
         }
     }
 }

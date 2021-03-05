@@ -14,7 +14,7 @@ namespace hotel_reservation_test.DBContexts
         public DbSet<Test> Test { get; set; }
         public DbSet<Hotel> Hotel { get; set; }
         public DbSet<Rooms> Rooms { get; set; }
-        public DbSet<Reservations> Reservations { get; set; }
+        public DbSet<Bookings> Bookings { get; set; }
         public DbSet<Configurations> Configurations { get; set; }
 
         public MySQLDBContext (DbContextOptions<MySQLDBContext> options) : base(options)
@@ -27,13 +27,13 @@ namespace hotel_reservation_test.DBContexts
             modelBuilder.Entity<Test>().ToTable("Test");
             modelBuilder.Entity<Hotel>().ToTable("Hotel");
             modelBuilder.Entity<Rooms>().ToTable("Rooms");
-            modelBuilder.Entity<Reservations>().ToTable("Reservations");
+            modelBuilder.Entity<Bookings>().ToTable("Bookings");
             modelBuilder.Entity<Configurations>().ToTable("Configurations");
 
             // Configure Primary Keys  
             modelBuilder.Entity<Hotel>().HasKey(ug => ug.id).HasName("PRIMARY KEY");
             modelBuilder.Entity<Rooms>().HasKey(ug => ug.id).HasName("PRIMARY KEY");
-            modelBuilder.Entity<Reservations>().HasKey(ug => ug.id).HasName("PRIMARY KEY");
+            modelBuilder.Entity<Bookings>().HasKey(ug => ug.id).HasName("PRIMARY KEY");
             modelBuilder.Entity<Configurations>().HasKey(ug => ug.id).HasName("PRIMARY KEY");
 
             // Configure indexes  
@@ -41,7 +41,7 @@ namespace hotel_reservation_test.DBContexts
 
             // Configure relationships  
             modelBuilder.Entity<Rooms>().HasOne<Hotel>().WithMany().HasPrincipalKey(ug => ug.id).HasForeignKey(u => u.idHotel).OnDelete(DeleteBehavior.NoAction).HasConstraintName("idHotel");
-            modelBuilder.Entity<Reservations>().HasOne<Rooms>().WithMany().HasPrincipalKey(ug => ug.id).HasForeignKey(u => u.idRoom).OnDelete(DeleteBehavior.NoAction).HasConstraintName("idRoom");
+            modelBuilder.Entity<Bookings>().HasOne<Rooms>().WithMany().HasPrincipalKey(ug => ug.id).HasForeignKey(u => u.idRoom).OnDelete(DeleteBehavior.NoAction).HasConstraintName("idRoom");
         }
     }
 }

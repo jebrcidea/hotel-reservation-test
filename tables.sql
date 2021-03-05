@@ -17,7 +17,7 @@ CREATE TABLE Rooms (
 	FOREIGN KEY (idHotel) REFERENCES Hotel(id)
 );
 
-CREATE TABLE Reservations (
+CREATE TABLE Bookings (
 	id int NOT NULL auto_increment,
 	idRoom int NOT NULL,
 	startDate DATETIME NOT NULL,

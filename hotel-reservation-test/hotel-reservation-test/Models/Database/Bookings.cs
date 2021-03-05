@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace hotel_reservation_test.Models.Database
 {
-    public class Reservations
+    public class Bookings
     {
         public int id { get; set; }
         public int idRoom { get; set; }

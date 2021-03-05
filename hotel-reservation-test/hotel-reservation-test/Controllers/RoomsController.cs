@@ -36,7 +36,7 @@ namespace hotel_reservation_test.Controllers
             }
         }
 
-        [HttpGet]
+        [HttpGet("{idRoom}")]
         public IActionResult GetOne(int idRoom)
         {
             try
@@ -103,8 +103,7 @@ namespace hotel_reservation_test.Controllers
             }
         }
 
-        [HttpPost]
-        [Route("delete")]
+        [HttpDelete("{idRoom}")]
         public async Task<IActionResult> DeleteRoom(int idRoom)
         {
             try
