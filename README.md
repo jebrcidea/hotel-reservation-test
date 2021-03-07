@@ -22,15 +22,15 @@ documenté. Tout shortcut non expliqué doit etre consideré comme une erreur. O
 pourrait accepter un rendu avec 3 lignes de code si elles ont du sens et que tout le
 raisonnement et les problèmatiques à prendre en compte sont decrites. 
 
-##Usage
+## Usage
 This code was developed in .Net Core 3.1 using Visual Studio.
 The file Booking test.postman_collection.json is a file created from postman with all the request on the API
 
-##Hostage
+## Hostage
 Since this API needs 99.99% availability it's recomended to host this in the cloud. 
 Should start with the default configurations for both the database and the EC2. If there's peak hours where the application goes down due to traffic it can be optimized using cloud elasticity. If it's too small can use serverless for saving money and only run it when it's called.For security allow database to be only accesed inside AWS network
 
-##Asumptions
+## Asumptions
 Besides the ones described earlier, the following assumptions were made for saving time
 -The API is insecure, which means it's not using HTTPS nor any Authentication token (Usually would've used OAuth jwt)
 -Since it's not using any Authentication there are no users nor user management. So reservations are not tied to just the user who created them
@@ -51,5 +51,5 @@ Besides the ones described earlier, the following assumptions were made for savi
 -It's assumed that there's no need for using any caching mechanism since the application is small, but if it grows a redis or something similar can be built for optimizing reading operations.
 -Besides the database SQL, postman request and the code comments, no additional documentation was created to save time.
 
-##Developer notes to ALTEN
+## Developer notes to ALTEN
 I had a lot of fun doing this test, I had never worked on .Net Core 3.1 (only 2.1) and I took this chance to explore the newest technology, not much changed though. I also had never done anything with unit testing before so I took the liberty to explore it briefly. I would've loved to do unit testing for everything but that would've took a lot of time.
