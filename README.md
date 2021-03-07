@@ -28,7 +28,7 @@ The file Booking test.postman_collection.json is a file created from postman wit
 
 ## Hostage
 Since this API needs 99.99% availability it's recomended to host this in the cloud. 
-Should start with the default configurations for both the database and the EC2. If there's peak hours where the application goes down due to traffic it can be optimized using cloud elasticity. If it's too small can use serverless for saving money and only run it when it's called.For security allow database to be only accesed inside AWS network
+Should start with the default configurations for both the database and the EC2. If there's peak hours where the application goes down due to traffic it can be optimized using cloud elasticity. For security allow database to be only accesed inside AWS network
 
 ## Asumptions
 Besides the ones described earlier, the following assumptions were made for saving time
