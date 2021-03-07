@@ -44,7 +44,7 @@ Besides the ones described earlier, the following assumptions were made for savi
 - Usually transactions should be logged somewhere in the database but for saving time this was omited.
 - SQL table contents are not extensive about the information each object should store
 - For saving time all the controllers are on the same API. If this application was considered to be of high concurrency it would've been split into microservices and databases with it's proper sharding schema, allowing for better scalability.
-- For saving time there's not a controller for the Hotel object and it's CRUD operations
+- For saving time there's not a controller for the Hotel object and its CRUD operations
 - Because there's only one room, no request was created for checking availability of several rooms
 - Since it's a Hotel in Cancún, Spanish collation was used for the database creation
 - A sample project for unit testing was added. It was initially intended to do unit testing of all the controllers but for saving time only a couple of calls have tests.
