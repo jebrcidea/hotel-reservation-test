@@ -22,6 +22,11 @@ namespace hotel_reservation_test.Controllers
             mySQLDBContext = context;
         }
 
+        /// <summary>
+        /// Gets the information for one specific booking
+        /// </summary>
+        /// <param name="idBooking"></param>
+        /// <returns>A HTTPResponse with the booking object</returns>
         [HttpGet("{idBooking}")]
         public IActionResult GetOne(int idBooking)
         {
@@ -41,6 +46,13 @@ namespace hotel_reservation_test.Controllers
 
         }
 
+        /// <summary>
+        /// Gets the availability for a specific room
+        /// </summary>
+        /// <param name="idRoom"></param>
+        /// <param name="startDate"></param>
+        /// <param name="endDate"></param>
+        /// <returns>A HTTP Response with a list of the available dates</returns>
         [HttpGet("{idRoom}/availability")]
         public async Task<IActionResult> GetAvailabilityRoom(int idRoom, [FromQuery] DateTime startDate, [FromQuery] DateTime endDate)
         {
@@ -65,6 +77,13 @@ namespace hotel_reservation_test.Controllers
             }
         }
 
+        /// <summary>
+        /// Creates a new booking
+        /// </summary>
+        /// <param name="idRoom"></param>
+        /// <param name="startDate"></param>
+        /// <param name="endDate"></param>
+        /// <returns>The booking object</returns>
         [HttpPost("{idRoom}/create")]
         public async Task<IActionResult> newBooking(int idRoom, DateTime startDate, DateTime endDate)
         {
@@ -91,6 +110,11 @@ namespace hotel_reservation_test.Controllers
             }
         }
 
+        /// <summary>
+        /// Modifies a booking
+        /// </summary>
+        /// <param name="booking"></param>
+        /// <returns>The updated booking</returns>
         [HttpPost("modify")]
         public async Task<IActionResult> modifyBooking(Bookings booking)
         {
@@ -121,6 +145,11 @@ namespace hotel_reservation_test.Controllers
             }
         }
 
+        /// <summary>
+        /// Cancels a booking
+        /// </summary>
+        /// <param name="idBooking"></param>
+        /// <returns>A HTTP response with the deleted booking</returns>
         [HttpDelete("{idBooking}")]
         public async Task<IActionResult> deleteBooking(int idBooking)
         {
@@ -131,7 +160,7 @@ namespace hotel_reservation_test.Controllers
                 {
                     mySQLDBContext.Bookings.Remove(booking);
                     await mySQLDBContext.SaveChangesAsync();
-                    return Ok();
+                    return Ok(booking);
                 }
                 return NotFound();
             }

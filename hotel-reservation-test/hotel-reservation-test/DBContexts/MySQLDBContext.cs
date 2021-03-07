@@ -11,7 +11,6 @@ namespace hotel_reservation_test.DBContexts
 {
     public class MySQLDBContext : DbContext
     {
-        public DbSet<Test> Test { get; set; }
         public DbSet<Hotel> Hotel { get; set; }
         public DbSet<Rooms> Rooms { get; set; }
         public DbSet<Bookings> Bookings { get; set; }
@@ -24,7 +23,6 @@ namespace hotel_reservation_test.DBContexts
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             // Use Fluent API to configure  
-            modelBuilder.Entity<Test>().ToTable("Test");
             modelBuilder.Entity<Hotel>().ToTable("Hotel");
             modelBuilder.Entity<Rooms>().ToTable("Rooms");
             modelBuilder.Entity<Bookings>().ToTable("Bookings");
@@ -35,13 +33,6 @@ namespace hotel_reservation_test.DBContexts
             modelBuilder.Entity<Rooms>().HasKey(ug => ug.id).HasName("PRIMARY KEY");
             modelBuilder.Entity<Bookings>().HasKey(ug => ug.id).HasName("PRIMARY KEY");
             modelBuilder.Entity<Configurations>().HasKey(ug => ug.id).HasName("PRIMARY KEY");
-
-            // Configure indexes  
-            modelBuilder.Entity<Test>().HasIndex(p => p.testoru).IsUnique();
-
-            // Configure relationships  
-            modelBuilder.Entity<Rooms>().HasOne<Hotel>().WithMany().HasPrincipalKey(ug => ug.id).HasForeignKey(u => u.idHotel).OnDelete(DeleteBehavior.NoAction).HasConstraintName("idHotel");
-            modelBuilder.Entity<Bookings>().HasOne<Rooms>().WithMany().HasPrincipalKey(ug => ug.id).HasForeignKey(u => u.idRoom).OnDelete(DeleteBehavior.NoAction).HasConstraintName("idRoom");
         }
     }
 }

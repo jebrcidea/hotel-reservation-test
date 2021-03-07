@@ -27,6 +27,7 @@ namespace hotel_reservation_test
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            //Configures the database connection from the appsettings json.
             string mySqlConnectionStr = Configuration.GetConnectionString("DefaultConnection");
             services.AddDbContextPool<MySQLDBContext>(options => options.UseMySql(mySqlConnectionStr));
             

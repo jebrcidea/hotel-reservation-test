@@ -22,6 +22,10 @@ namespace hotel_reservation_test.Controllers
             mySQLDBContext = context;
         }
 
+        /// <summary>
+        /// Gets all rooms
+        /// </summary>
+        /// <returns>An Http Response with a list of rooms</returns>
         [HttpGet]
         public IActionResult GetAll()
         {
@@ -36,6 +40,11 @@ namespace hotel_reservation_test.Controllers
             }
         }
 
+        /// <summary>
+        /// Gets all the information from an specific room
+        /// </summary>
+        /// <param name="idRoom"></param>
+        /// <returns>A room</returns>
         [HttpGet("{idRoom}")]
         public IActionResult GetOne(int idRoom)
         {
@@ -55,6 +64,11 @@ namespace hotel_reservation_test.Controllers
              
         }
 
+        /// <summary>
+        /// Creates a new room
+        /// </summary>
+        /// <param name="room"></param>
+        /// <returns>the newly created room</returns>
         [HttpPost]
         public async Task<IActionResult> AddRoom(Rooms room)
         {
@@ -75,6 +89,11 @@ namespace hotel_reservation_test.Controllers
             }
         }
 
+        /// <summary>
+        /// Updates a room
+        /// </summary>
+        /// <param name="room"></param>
+        /// <returns>The updated room</returns>
         [HttpPost]
         [Route("update")]
         public async Task<IActionResult> ModifyRoom(Rooms room)
@@ -103,6 +122,11 @@ namespace hotel_reservation_test.Controllers
             }
         }
 
+        /// <summary>
+        /// Removes a room
+        /// </summary>
+        /// <param name="idRoom"></param>
+        /// <returns>The deleted Room</returns>
         [HttpDelete("{idRoom}")]
         public async Task<IActionResult> DeleteRoom(int idRoom)
         {

@@ -11,6 +11,13 @@ namespace hotel_reservation_test.Classes
 {
     public static class BookingsHelper
     {
+        /// <summary>
+        /// Formats the date so the first one starts at the begining of the day
+        /// and the last one ends at the end of that day
+        /// </summary>
+        /// <param name="startTime"></param>
+        /// <param name="endTime"></param>
+        /// <returns>an array of 2 dates start at 0 and end at 1</returns>
         public static DateTime[] formatDates(DateTime startTime, DateTime endTime)
         {
             DateTime[] response = new DateTime[2];
@@ -21,6 +28,12 @@ namespace hotel_reservation_test.Classes
             return response;
         }
 
+        /// <summary>
+        /// Validates that the starts at least at the next full day and it's no more than 
+        /// maxReserveAdvanceDays days into the future
+        /// </summary>
+        /// <param name="date"></param>
+        /// <returns>A string with the error or null.</returns>
         public static string dateValidation(DateTime date)
         {
             DateTime tomorrow = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.AddDays(1).Day);
@@ -37,6 +50,12 @@ namespace hotel_reservation_test.Classes
             return null;
         }
 
+        /// <summary>
+        /// Checks that endTime is not smaller that startTime
+        /// </summary>
+        /// <param name="startTime"></param>
+        /// <param name="endTime"></param>
+        /// <returns>a string with the error or null</returns>
         public static string validateDateCoherence(DateTime startTime, DateTime endTime)
         {
             if (endTime < startTime)
@@ -47,7 +66,14 @@ namespace hotel_reservation_test.Classes
             return null;
         }
 
-        //Todo Validate idRoom exists
+        /// <summary>
+        /// Validates the logic of the dates according to business rules.
+        /// </summary>
+        /// <param name="startTime"></param>
+        /// <param name="endTime"></param>
+        /// <param name="mySQLDBContext"></param>
+        /// <param name="idRoom"></param>
+        /// <returns>A list of strings with the errors</returns>
         public static async Task<List<string>> validations(DateTime startTime, DateTime endTime
                                                 ,MySQLDBContext mySQLDBContext, int idRoom)
         {
@@ -69,7 +95,16 @@ namespace hotel_reservation_test.Classes
                 throw e;
             }
         }
-
+        /// <summary>
+        /// Checks that the desired room is available and follow the business rule of the max stay
+        /// </summary>
+        /// <param name="startTime"></param>
+        /// <param name="endTime"></param>
+        /// <param name="mySQLDBContext"></param>
+        /// <param name="idRoom"></param>
+        /// <param name="isInsert"></param>
+        /// <param name="bookingID"></param>
+        /// <returns>Returns a list of errors</returns>
         public static List<string> validationsBooking(DateTime startTime, DateTime endTime
                                                 , MySQLDBContext mySQLDBContext, int idRoom
                                                 , Boolean isInsert = true, int bookingID = 0)
@@ -80,7 +115,7 @@ namespace hotel_reservation_test.Classes
                 Boolean roomAvailable = isDateAvailable(idRoom, startTime, endTime, mySQLDBContext, isInsert, bookingID);
                 if (!roomAvailable)
                     errors.Add(Constants.roomBookedError);
-                if ((endTime - startTime).TotalDays > 3)
+                if ((endTime - startTime).TotalDays > Constants.maxStayDays)
                     errors.Add(Constants.datesLengthError);
                 return errors;
             }
@@ -90,17 +125,26 @@ namespace hotel_reservation_test.Classes
             }
         }
 
-        //ToDo get available dates of room
+        /// <summary>
+        /// Gets a list of date ranges where the room is available
+        /// </summary>
+        /// <param name="idRoom"></param>
+        /// <param name="startTime"></param>
+        /// <param name="endTime"></param>
+        /// <param name="mySQLDBContext"></param>
+        /// <returns>A list of start and end dates for the availability of that room</returns>
         public static List<RoomAvailability> GetRoomAvailability(int idRoom, DateTime startTime
                                                                 ,DateTime endTime, MySQLDBContext mySQLDBContext)
         {
             List<RoomAvailability> response = new List<RoomAvailability>();
             try
             {
+                //gets all the bookings on the room and dates they're asking
                 List<Bookings> bookings = mySQLDBContext.Bookings.Where(x => x.idRoom == idRoom &&
                                                                         ((x.startDate >= startTime && x.startDate <= endTime)
                                                                         || (x.endDate >= startTime && x.endDate <= endTime))
                                                                         ).ToList();
+                //if there's no bookings that means it's all available so we just build that response and return
                 if(bookings.Count == 0)
                 {
                     response.Add(new RoomAvailability { startDate = startTime, endDate = endTime });
@@ -110,13 +154,17 @@ namespace hotel_reservation_test.Classes
                 DateTime startDate = startTime;
                 foreach (Bookings booking in bookings)
                 {
+                    //if we have a time gap before the first booking on the interval 
+                    //we add that to our response list
                     if(booking.startDate > startDate)
                     {
                         response.Add(new RoomAvailability { startDate = startDate, endDate = booking.startDate.AddSeconds(-1) });
                     }
+                    //we set the next block startDate to after the current booking ends
                     startDate = booking.endDate.AddSeconds(1);
                 }
 
+                //in case we had a gap at the end, we add it at the end
                 if(startDate < endTime)
                 {
                     response.Add(new RoomAvailability { startDate = startDate, endDate = endTime });
@@ -130,7 +178,17 @@ namespace hotel_reservation_test.Classes
                 throw e;
             }
         }
-
+        /// <summary>
+        /// Checks if there's another booking that has conflict with the one we're trying to create.
+        /// If it's for an update it ignores this booking since it will change.
+        /// </summary>
+        /// <param name="idRoom"></param>
+        /// <param name="startTime"></param>
+        /// <param name="endTime"></param>
+        /// <param name="mySQLDBContext"></param>
+        /// <param name="isInsert"></param>
+        /// <param name="idBooking"></param>
+        /// <returns>A boolean to if the date was available or not</returns>
         public static Boolean isDateAvailable(int idRoom, DateTime startTime
                                                , DateTime endTime, MySQLDBContext mySQLDBContext
                                                 , Boolean isInsert = true, int idBooking = 0)
