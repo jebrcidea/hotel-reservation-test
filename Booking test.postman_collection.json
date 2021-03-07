@@ -14,12 +14,10 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:58357/api/Rooms",
-							"protocol": "http",
+							"raw": "{{endpoint}}/api/Rooms",
 							"host": [
-								"localhost"
+								"{{endpoint}}"
 							],
-							"port": "58357",
 							"path": [
 								"api",
 								"Rooms"
@@ -35,12 +33,10 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:58357/api/Rooms/1",
-							"protocol": "http",
+							"raw": "{{endpoint}}/api/Rooms/1",
 							"host": [
-								"localhost"
+								"{{endpoint}}"
 							],
-							"port": "58357",
 							"path": [
 								"api",
 								"Rooms",
@@ -66,12 +62,10 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:58357/api/Rooms",
-							"protocol": "http",
+							"raw": "{{endpoint}}/api/Rooms",
 							"host": [
-								"localhost"
+								"{{endpoint}}"
 							],
-							"port": "58357",
 							"path": [
 								"api",
 								"Rooms"
@@ -96,12 +90,10 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:58357/api/Rooms/update",
-							"protocol": "http",
+							"raw": "{{endpoint}}/api/Rooms/update",
 							"host": [
-								"localhost"
+								"{{endpoint}}"
 							],
-							"port": "58357",
 							"path": [
 								"api",
 								"Rooms",
@@ -127,12 +119,10 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:58357/api/Rooms/2",
-							"protocol": "http",
+							"raw": "{{endpoint}}/api/Rooms/2",
 							"host": [
-								"localhost"
+								"{{endpoint}}"
 							],
-							"port": "58357",
 							"path": [
 								"api",
 								"Rooms",
@@ -155,12 +145,10 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:58357/api/Bookings/2",
-							"protocol": "http",
+							"raw": "{{endpoint}}/api/Bookings/2",
 							"host": [
-								"localhost"
+								"{{endpoint}}"
 							],
-							"port": "58357",
 							"path": [
 								"api",
 								"Bookings",
@@ -177,12 +165,10 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:58357/api/Bookings/1/availability?startDate=2021-03-07&endDate=2021-03-30",
-							"protocol": "http",
+							"raw": "{{endpoint}}/api/Bookings/1/availability?startDate=2021-03-07&endDate=2021-03-30",
 							"host": [
-								"localhost"
+								"{{endpoint}}"
 							],
-							"port": "58357",
 							"path": [
 								"api",
 								"Bookings",
@@ -219,12 +205,10 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:58357/api/Bookings/1/create",
-							"protocol": "http",
+							"raw": "{{endpoint}}/api/Bookings/1/create",
 							"host": [
-								"localhost"
+								"{{endpoint}}"
 							],
-							"port": "58357",
 							"path": [
 								"api",
 								"Bookings",
@@ -263,12 +247,10 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:58357/api/Bookings/modify",
-							"protocol": "http",
+							"raw": "{{endpoint}}/api/Bookings/modify",
 							"host": [
-								"localhost"
+								"{{endpoint}}"
 							],
-							"port": "58357",
 							"path": [
 								"api",
 								"Bookings",
@@ -285,12 +267,10 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:58357/api/Bookings/1",
-							"protocol": "http",
+							"raw": "{{endpoint}}/api/Bookings/1",
 							"host": [
-								"localhost"
+								"{{endpoint}}"
 							],
-							"port": "58357",
 							"path": [
 								"api",
 								"Bookings",
