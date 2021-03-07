@@ -32,24 +32,24 @@ Should start with the default configurations for both the database and the EC2. 
 
 ## Asumptions
 Besides the ones described earlier, the following assumptions were made for saving time
--The API is insecure, which means it's not using HTTPS nor any Authentication token (Usually would've used OAuth jwt)
+- The API is insecure, which means it's not using HTTPS nor any Authentication token (Usually would've used OAuth jwt)
 -Since it's not using any Authentication there are no users nor user management. So reservations are not tied to just the user who created them
--Usually API configurations would be store on a database and have it's corresponeding controller for updating them but for saving time the constraints and error messages are saved on a static class called Models/Constants
--Since there's no users no email is being sent to confirm a booking
--For simplicity the booking API isn't dealing with payments. Usually the request would've been split between creating the booking and then confirming it with the payment but that would've maybe required a processor as windows service to check that.
--Since there's no user management we can't confirm if the same user made 2 consecutives reservations breaking the max 3 days rule
--Bookings can only book for a whole day, starting at 0:0:0 and ending at 23:59:59
--This API is not considering downtime to the room in case it needs to be serviced or remodeled
--No instalation manual was created to save time
--Usually transactions should be logged somewhere in the database but for saving time this was omited.
--SQL table contents are not extensive about the information each object should store
--For saving time all the controllers are on the same API. If this application was considered to be of high concurrency it would've been split into microservices and databases with it's proper sharding schema, allowing for better scalability.
--For saving time there's not a controller for the Hotel object and it's CRUD operations
--Because there's only one room, no request was created for checking availability of several rooms
--Since it's a Hotel in Cancún, Spanish collation was used for the database creation
--A sample project for unit testing was added. It was initially intended to do unit testing of all the controllers but for saving time only a couple of calls have tests.
--It's assumed that there's no need for using any caching mechanism since the application is small, but if it grows a redis or something similar can be built for optimizing reading operations.
--Besides the database SQL, postman request and the code comments, no additional documentation was created to save time.
+- Usually API configurations would be store on a database and have it's corresponeding controller for updating them but for saving time the constraints and error messages are saved on a static class called Models/Constants
+- Since there's no users no email is being sent to confirm a booking
+- For simplicity the booking API isn't dealing with payments. Usually the request would've been split between creating the booking and then confirming it with the payment but that would've maybe required a processor as windows service to check that.
+- Since there's no user management we can't confirm if the same user made 2 consecutives reservations breaking the max 3 days rule
+- Bookings can only book for a whole day, starting at 0:0:0 and ending at 23:59:59
+- This API is not considering downtime to the room in case it needs to be serviced or remodeled
+- No instalation manual was created to save time
+- Usually transactions should be logged somewhere in the database but for saving time this was omited.
+- SQL table contents are not extensive about the information each object should store
+- For saving time all the controllers are on the same API. If this application was considered to be of high concurrency it would've been split into microservices and databases with it's proper sharding schema, allowing for better scalability.
+- For saving time there's not a controller for the Hotel object and it's CRUD operations
+- Because there's only one room, no request was created for checking availability of several rooms
+- Since it's a Hotel in Cancún, Spanish collation was used for the database creation
+- A sample project for unit testing was added. It was initially intended to do unit testing of all the controllers but for saving time only a couple of calls have tests.
+- It's assumed that there's no need for using any caching mechanism since the application is small, but if it grows a redis or something similar can be built for optimizing reading operations.
+- Besides the database SQL, postman request and the code comments, no additional documentation was created to save time.
 
 ## Developer notes to ALTEN
 I had a lot of fun doing this test, I had never worked on .Net Core 3.1 (only 2.1) and I took this chance to explore the newest technology, not much changed though. I also had never done anything with unit testing before so I took the liberty to explore it briefly. I would've loved to do unit testing for everything but that would've took a lot of time.
