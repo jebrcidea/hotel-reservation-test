@@ -26,13 +26,11 @@ namespace hotel_reservation_test.DBContexts
             modelBuilder.Entity<Hotel>().ToTable("Hotel");
             modelBuilder.Entity<Rooms>().ToTable("Rooms");
             modelBuilder.Entity<Bookings>().ToTable("Bookings");
-            modelBuilder.Entity<Configurations>().ToTable("Configurations");
 
             // Configure Primary Keys  
             modelBuilder.Entity<Hotel>().HasKey(ug => ug.id).HasName("PRIMARY KEY");
             modelBuilder.Entity<Rooms>().HasKey(ug => ug.id).HasName("PRIMARY KEY");
             modelBuilder.Entity<Bookings>().HasKey(ug => ug.id).HasName("PRIMARY KEY");
-            modelBuilder.Entity<Configurations>().HasKey(ug => ug.id).HasName("PRIMARY KEY");
         }
     }
 }

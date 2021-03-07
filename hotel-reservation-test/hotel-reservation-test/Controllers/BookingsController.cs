@@ -2,8 +2,10 @@
 using hotel_reservation_test.DBContexts;
 using hotel_reservation_test.Models;
 using hotel_reservation_test.Models.Database;
+using hotel_reservation_test.Models.Input;
 using hotel_reservation_test.Models.Response;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,10 +18,12 @@ namespace hotel_reservation_test.Controllers
     public class BookingsController : ControllerBase
     {
         private MySQLDBContext mySQLDBContext;
+        private readonly ILogger logger;
 
-        public BookingsController(MySQLDBContext context)
+        public BookingsController(MySQLDBContext context, ILogger<RoomsController> _logger)
         {
             mySQLDBContext = context;
+            logger = _logger;
         }
 
         /// <summary>
@@ -41,6 +45,7 @@ namespace hotel_reservation_test.Controllers
             }
             catch (Exception e)
             {
+                logger.LogError(e.Message);
                 return StatusCode(500);
             }
 
@@ -73,6 +78,7 @@ namespace hotel_reservation_test.Controllers
             }
             catch (Exception e)
             {
+                logger.LogError(e.Message);
                 return StatusCode(500);
             }
         }
@@ -80,32 +86,31 @@ namespace hotel_reservation_test.Controllers
         /// <summary>
         /// Creates a new booking
         /// </summary>
-        /// <param name="idRoom"></param>
-        /// <param name="startDate"></param>
-        /// <param name="endDate"></param>
+        /// <param name="newBooking"></param>
         /// <returns>The booking object</returns>
         [HttpPost("{idRoom}/create")]
-        public async Task<IActionResult> newBooking(int idRoom, DateTime startDate, DateTime endDate)
+        public async Task<IActionResult> CreateNewBooking(NewBooking booking)
         {
             try
             {
-                DateTime[] formatedDates = BookingsHelper.formatDates(startDate, endDate);
-                startDate = formatedDates[0];
-                endDate = formatedDates[1];
+                DateTime[] formatedDates = BookingsHelper.formatDates(booking.startDate, booking.endDate);
+                booking.startDate = formatedDates[0];
+                booking.endDate = formatedDates[1];
 
-                List<string> errors = await BookingsHelper.validations(startDate, endDate, mySQLDBContext, idRoom);
-                errors.AddRange(BookingsHelper.validationsBooking(startDate, endDate, mySQLDBContext, idRoom));
+                List<string> errors = await BookingsHelper.validations(booking.startDate, booking.endDate, mySQLDBContext, booking.idRoom);
+                errors.AddRange(BookingsHelper.validationsBooking(booking.startDate, booking.endDate, mySQLDBContext, booking.idRoom));
 
                 if (errors.Count != 0)
                     return BadRequest(errors);
 
-                Bookings newBooking = new Bookings { idRoom = idRoom, startDate = startDate, endDate = endDate };
+                Bookings newBooking = new Bookings { idRoom = booking.idRoom, startDate = booking.startDate, endDate = booking.endDate };
                 await mySQLDBContext.AddAsync(newBooking);
                 await mySQLDBContext.SaveChangesAsync();
                 return Ok(newBooking);
             }
             catch (Exception e)
             {
+                logger.LogError(e.Message);
                 return StatusCode(500);
             }
         }
@@ -141,6 +146,7 @@ namespace hotel_reservation_test.Controllers
             }
             catch (Exception e)
             {
+                logger.LogError(e.Message);
                 return StatusCode(500);
             }
         }
@@ -166,6 +172,7 @@ namespace hotel_reservation_test.Controllers
             }
             catch (Exception e)
             {
+                logger.LogError(e.Message);
                 return StatusCode(500);
             }
 

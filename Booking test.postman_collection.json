@@ -1,0 +1,308 @@
+{
+	"info": {
+		"_postman_id": "21b3c637-2fe3-43a4-94c7-55784ed718f0",
+		"name": "Booking test",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Rooms",
+			"item": [
+				{
+					"name": "Get all rooms",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:58357/api/Rooms",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "58357",
+							"path": [
+								"api",
+								"Rooms"
+							]
+						},
+						"description": "Gets all the rooms on the database"
+					},
+					"response": []
+				},
+				{
+					"name": "Get one room",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:58357/api/Rooms/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "58357",
+							"path": [
+								"api",
+								"Rooms",
+								"1"
+							]
+						},
+						"description": "Gets the information about an specific room"
+					},
+					"response": []
+				},
+				{
+					"name": "Add Room",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"idHotel\": 1,\r\n    \"roomNumber\": \"102\",\r\n    \"maxCapacity\": 2,\r\n    \"rate\":799.99,\r\n    \"phoneExtension\": 102\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:58357/api/Rooms",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "58357",
+							"path": [
+								"api",
+								"Rooms"
+							]
+						},
+						"description": "Adds a new room to the system"
+					},
+					"response": []
+				},
+				{
+					"name": "Modify room",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"idHotel\": 1,\r\n    \"id\":1,\r\n    \"roomNumber\": \"102\",\r\n    \"maxCapacity\": 2,\r\n    \"rate\":799.99,\r\n    \"phoneExtension\": 102\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:58357/api/Rooms/update",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "58357",
+							"path": [
+								"api",
+								"Rooms",
+								"update"
+							]
+						},
+						"description": "Updates the information for a room on the DB"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete room",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:58357/api/Rooms/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "58357",
+							"path": [
+								"api",
+								"Rooms",
+								"2"
+							]
+						},
+						"description": "Deletes a room from the system"
+					},
+					"response": []
+				}
+			],
+			"description": "All the methods for the Rooms controller"
+		},
+		{
+			"name": "Bookings",
+			"item": [
+				{
+					"name": "Get booking information",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:58357/api/Bookings/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "58357",
+							"path": [
+								"api",
+								"Bookings",
+								"2"
+							]
+						},
+						"description": "Gets the information about a specific booking"
+					},
+					"response": []
+				},
+				{
+					"name": "Get room availability",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:58357/api/Bookings/1/availability?startDate=2021-03-07&endDate=2021-03-30",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "58357",
+							"path": [
+								"api",
+								"Bookings",
+								"1",
+								"availability"
+							],
+							"query": [
+								{
+									"key": "startDate",
+									"value": "2021-03-07"
+								},
+								{
+									"key": "endDate",
+									"value": "2021-03-30"
+								}
+							]
+						},
+						"description": "Gets the availability of a room inside a selected period of time"
+					},
+					"response": []
+				},
+				{
+					"name": "New Booking",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"idRoom\":1,\r\n    \"startDate\":\"2021-03-14\",\r\n    \"endDate\":\"2021-03-16\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:58357/api/Bookings/1/create",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "58357",
+							"path": [
+								"api",
+								"Bookings",
+								"1",
+								"create"
+							],
+							"query": [
+								{
+									"key": "startDate",
+									"value": "2021-03-10",
+									"disabled": true
+								},
+								{
+									"key": "endDate",
+									"value": "2021-03-12",
+									"disabled": true
+								}
+							]
+						},
+						"description": "Creates a new booking"
+					},
+					"response": []
+				},
+				{
+					"name": "Modify Booking",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\":4,\r\n    \"idRoom\":1,\r\n    \"startDate\":\"2021-03-11\",\r\n    \"endDate\":\"2021-03-13\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:58357/api/Bookings/modify",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "58357",
+							"path": [
+								"api",
+								"Bookings",
+								"modify"
+							]
+						},
+						"description": "Updates a booking"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete a booking",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:58357/api/Bookings/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "58357",
+							"path": [
+								"api",
+								"Bookings",
+								"1"
+							]
+						},
+						"description": "Deletes a booking"
+					},
+					"response": []
+				}
+			],
+			"description": "All the methods for the Booking controller"
+		}
+	]
+}

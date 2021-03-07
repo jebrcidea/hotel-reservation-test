@@ -4,6 +4,7 @@ using hotel_reservation_test.Models;
 using hotel_reservation_test.Models.Database;
 using hotel_reservation_test.Models.Response;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,10 +17,12 @@ namespace hotel_reservation_test.Controllers
     public class RoomsController : ControllerBase
     {
         private MySQLDBContext mySQLDBContext;
+        private readonly ILogger logger;
 
-        public RoomsController(MySQLDBContext context)
+        public RoomsController(MySQLDBContext context, ILogger<RoomsController> _logger)
         {
             mySQLDBContext = context;
+            logger = _logger;
         }
 
         /// <summary>
@@ -36,6 +39,7 @@ namespace hotel_reservation_test.Controllers
             }
             catch(Exception e)
             {
+                logger.LogError(e.Message);
                 return StatusCode(500);
             }
         }
@@ -59,6 +63,7 @@ namespace hotel_reservation_test.Controllers
             }
             catch(Exception e)
             {
+                logger.LogError(e.Message);
                 return StatusCode(500);
             }
              
@@ -85,6 +90,7 @@ namespace hotel_reservation_test.Controllers
             }
             catch(Exception e)
             {
+                logger.LogError(e.Message);
                 return StatusCode(500);
             }
         }
@@ -118,6 +124,7 @@ namespace hotel_reservation_test.Controllers
             }
             catch (Exception e)
             {
+                logger.LogError(e.Message);
                 return StatusCode(500);
             }
         }
@@ -146,6 +153,7 @@ namespace hotel_reservation_test.Controllers
             }
             catch (Exception e)
             {
+                logger.LogError(e.Message);
                 return StatusCode(500);
             }
         }

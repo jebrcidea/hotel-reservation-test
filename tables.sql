@@ -1,3 +1,4 @@
+CREATE DATABASE `hotel-reservation` /*!40100 COLLATE 'utf32_spanish_ci' */
 
 CREATE TABLE Hotel (
 	id int NOT NULL auto_increment,
@@ -28,11 +29,4 @@ CREATE TABLE Bookings (
 	FOREIGN KEY (idRoom) REFERENCES Rooms(id)
 );
 
-CREATE TABLE Configurations (
-	id int NOT NULL AUTO_INCREMENT,
-	maxStayDays SMALLINT NOT NULL,
-	maxReserveAdvanceDays SMALLINT NOT NULL
-	
-);
-
-
+INSERT INTO HOTEL (name, phone) VALUES ('Cancún ALTEN Test Hotel', '+529988816940')
