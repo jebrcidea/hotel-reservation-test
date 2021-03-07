@@ -23,7 +23,7 @@ pourrait accepter un rendu avec 3 lignes de code si elles ont du sens et que tou
 raisonnement et les problèmatiques à prendre en compte sont decrites. 
 
 ## Usage
-This code was developed in .Net Core 3.1 using Visual Studio.
+This code was developed in .Net Core 3.1 using Visual Studio. It also uses a MySQL database.
 The file Booking test.postman_collection.json is a file created from postman with all the request on the API
 
 ## Hostage
